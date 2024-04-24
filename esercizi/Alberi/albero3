@@ -1,0 +1,38 @@
+int glob = 5 
+int main(){
+   pid_t pid;
+   int i;
+   for(i = 1; i < glob; i++){
+      pid = fork();
+      if (pid == 0)
+         glob = glob -1;
+   }
+}
+ 
+
+1 A
+2 B
+3 C D
+4 E F G
+
+								A g = 5
+				
+				B = 5/4							C = 5/4                           E = 5/4
+				
+		D = 4/3                     F = 4/3				G = 4/3                               
+		
+	H = 3/2 
+	
+	
+	
+	
+	
+	
+	
+	soluzione
+	
+					A
+				
+				B              D          G      H
+				
+			C             E        F
