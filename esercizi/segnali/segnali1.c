@@ -31,7 +31,7 @@ int main(int argc, char *argv[]){
    signal(SIGUSR2, gestore);
 
    argomento = atoi(argv[1]);
-
+   printf("%d",argomento);
    // Creazione figlio A
    pidA  = fork();
    if(pidA == 0){
