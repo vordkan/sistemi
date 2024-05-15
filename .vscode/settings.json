@@ -3,5 +3,21 @@
         "wait.h": "c",
         "unistd.h": "c",
         "errno.h": "c"
-    }
+    },
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Local Host",
+            "database": "matt",
+            "username": "matt",
+            "askForPassword": true
+        }
+    ]
 }
