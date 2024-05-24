@@ -13,6 +13,8 @@ int main(){
 		pid = fork();
 		glob++;
 	}
+		printf ("Process %d, glob = %d\n", getpid(), glob);
+
 	if (glob>5){
 		glob++;
 		if (pid==0){
@@ -21,7 +23,7 @@ int main(){
 		if (pid!=0){
 			pid = fork();
 			glob--;
-		}/*
+		}
 		if (pid==0){
 			pid = fork();
 			glob--;
@@ -31,9 +33,8 @@ int main(){
 			glob++;
 			temp = glob;
 			glob--;
-		}*/
+		}
 	}
 	
-	printf ("Process %d, glob = %d, temp = %d, i = %d\n", getpid(), glob, temp, i);
 }
 

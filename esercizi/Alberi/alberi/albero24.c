@@ -7,12 +7,15 @@ int main(){
 
     p = fork();
     g--;
+
     fork();
+        
     if(p > 0){
+
         p = fork();
         g--;
     }
 
-    printf ("Process %d, glob = %d pid =%d\n", getpid(), g, p);
+   printf ("Process %d, glob = %d\n", getpid(), g);
 
 }
