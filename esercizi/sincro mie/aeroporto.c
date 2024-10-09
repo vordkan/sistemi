@@ -8,7 +8,7 @@
 */
 
 passeggero(){
-    repeat
+    while(true)
         // scelgo la coda più breve
         scelta = min(coda[N]) 
 
@@ -32,11 +32,12 @@ passeggero(){
         wait(metaldetector_passato) 
 
         exit()
-    forever
+    
+    }
 }
 
 addetto(){
-   repeat
+   while(true)
         // aspetto che arriva un passeggero
         wait(passeggeri)   
 
@@ -71,5 +72,5 @@ addetto(){
 
         // passa il controllo
         signal(metaldetector_passato) 
-   forever
+    }
 }

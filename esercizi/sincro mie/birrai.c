@@ -6,8 +6,7 @@
 */
 
 birrai(){
-    repeat
-    {
+    while(true){
         // aspetto che il bancone sia vuoto per produrre birra
         wait(bancone_vuoto)
 
@@ -23,12 +22,10 @@ birrai(){
                 // segnalo che tutta la postazione è piena
                 signal(bancone_pieno)
     }
-    forever
 }
 
 cameriere(){
-    repeat
-    {
+    while(true){
         // controllo se il locale è affollato
         affollato = rand(0,1)
         if(affollato == 1)
@@ -58,6 +55,5 @@ cameriere(){
                 // segnalo le birre finite
                 signal(bancone_vuoto)
     }
-    forever
 }
 
