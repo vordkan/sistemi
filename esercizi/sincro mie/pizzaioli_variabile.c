@@ -29,7 +29,7 @@ Camerieri(){
 
         // in mutua esclusione mi controllo se c'è folla e servo i piatti
         lock(mutex)
-        if(affollato == 1){
+        if(affollato == 1 && piatto >= 3){
             for(i = 0 to 2){
                 piatto--
                 // se il piatto arriva a 0 allora segnalo al pizzaiolo che sforna altre pizze
@@ -40,10 +40,12 @@ Camerieri(){
             unlock(mutex)            
         }
         else{
-            for(i = 0 to 1){
-                piatto --
-                if(piatto == 0){
-                    signal(piatto_empty)
+            if(piatto >= 2){
+                for(i = 0 to 1){
+                    piatto --
+                    if(piatto == 0){
+                        signal(piatto_empty)
+                    }
                 }
             }
             unlock(mutex)
