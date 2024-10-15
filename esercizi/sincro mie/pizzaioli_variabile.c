@@ -3,6 +3,9 @@ In una pizzeria, due pizzaioli sfornano continuamente pizze che pongono di volta
 i piatti sono prelevati da M<N camerieri che provvedono a servirle ai tavoli.
 Ciascun cameriere può portare 2 pizze per volta se disponiili ma in caso di affollamento i camerieri prelevano 3 pizze per volta
 */
+piatto_empty, piatto_full := semaforo binario
+mutex                     := mutex
+piatto, i, affollato      := int
 
 Pizzaioli(){
     while(true){
