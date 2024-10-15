@@ -39,16 +39,18 @@ Camerieri(){
             }
             unlock(mutex)            
         }
-        else{
-            if(piatto >= 2){
-                for(i = 0 to 1){
-                    piatto --
-                    if(piatto == 0){
-                        signal(piatto_empty)
-                    }
+        else if(affollato == 0 && piatto >= 2){
+            for(i = 0 to 1){
+                piatto --
+                if(piatto == 0){
+                    signal(piatto_empty)
                 }
             }
             unlock(mutex)
+        }
+        else{
+            unlock(mutex)
+            signal(piatto_empty)
         }
     }
 }
