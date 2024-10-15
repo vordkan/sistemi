@@ -34,15 +34,13 @@ cameriere(){
 
         lock(mutex)
         if(affollato == 1){
-            unlock(mutex)
 
             // servo 3 piatti per volta e aumento i piatti disponibili 
-            lock(mutex)
             for(i = j to 2){
-                piatti[i] == 0
+                piatti[i] = 0
 
                 // controllo se sono finiti i piatti da servire
-                if(j > M){
+                if(j > N){
                     // se sono finiti lo segnalo e il pizzaiolo sforna altre pizze
                     signal(piatto_empty)
                 }
@@ -57,12 +55,11 @@ cameriere(){
             unlock(mutex)
 
             // servo 2 piatti per volta e aumento i piatti disponibili 
-            lock(mutex)
             for(i = j to 1){
-                piatti[i] == 0
+                piatti[i] = 0
 
                 // controllo se sono finiti i piatti da servire
-                if(j > M){
+                if(j > N){
                     // se sono finiti lo segnalo e il pizzaiolo sforna altre pizze
                     signal(piatto_empty)
                 }
