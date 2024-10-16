@@ -82,7 +82,7 @@ discesa(){
             porta[scelta_porta] = 0
             unlock(mutex)
             // segnalo che possono salire ora
-            signal(sali)
+            signal(salita)
         }
         else{
             if(my_posto == 2){
