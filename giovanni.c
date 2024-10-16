@@ -104,4 +104,51 @@ processi_attivi() {
 }
 
 
-7
+/* In un sistema sono attivi N processi dotati di un credito C.
+   Ogni processo genera un numero casuale P in [1...C) e verifica se il proprio P è
+   maggiore di quello degli altri processi (a parità di P vince il processo con il PID
+   minore).
+   Il processo vincitore (quello con P maggiore) aggiunge al proprio credito C le quantità
+   P generate da tutti gli altri processi, che invece sottraggono al proprio credito C la 
+   quantità P generata.
+   Un processo con credito C=0 termina
+*/
+
+//Processi da sincronizzare: Processo(i)
+
+/*Azioni dei Processi:
+  1)Ogni processo genera un numero casuale P in [1...C]
+  2)Ogni processo verifica se il proprio P è maggiore di quello degli altri
+  3)Il processo vincitore aggiunge al proprio credito C le quantità P generate da tutti gli altri
+  4)Chi invece perde sottrae al proprio credito C le quantità generate da tutti gli altri
+  5)Un processo con credito C=0 perde e termina.
+*/
+
+processo(i) {
+   //Continua a generare numeri solo finché C>0
+   while(C[i] > 0) {
+      //Genero un numero casuale P
+      numero_casuale = rand(1,C)
+
+      //Associo il numero generato a quel processo
+      P[i] = numero_casuale
+
+      //Mi trovo il processo con il P maggiore
+      P_maggiore = max(P)
+      
+      wait(barrier)
+      //Verifico se il P è meggiore di quello degli altri
+         if(numero_generato == P_maggiore){
+            for(j = 0 to N){
+                if(i != j){
+                    credito[j] -= P[j]
+                }
+                else{
+                    credito[i] += P[j]
+                }
+            }
+            signal(barrier)
+         }
+   }
+   exit() 
+}
