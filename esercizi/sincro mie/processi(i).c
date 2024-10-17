@@ -19,11 +19,16 @@ processo(i){
         // controlla se il numero è il maggiore di tutti gli altri 
         if(numero_generato == max(P)){
             for(j = 0 to N){
-                if(i != j){
-                    credito[j] -= P[j]
+                if(i == j){
+                    credito[j] += P[j]
                 }
-                else{
-                    credito[i] += P[j]
+            }
+            signal(barrier)
+        }
+        else{
+            for(j = 0 to N){
+                if(i != j){+
+                    credito[j] -= P[j]
                 }
             }
             signal(barrier)
