@@ -153,3 +153,194 @@ processo(i) {
    exit() 
 }
 
+
+/*
+    Ad una fiera medievale è in atto un gioco.
+    L'armiere pone M spade su un bancone che N cavalieri (N>M) devono accaparrarsi una spada ciascuno quanto prima.
+    Chi riesce a prendere la propria spada attende gli altri cavallieri che riescono a prendere la spada.
+    Mentre coloro i quali sono rimasti senza attendono il prossimo giro. 
+    Il prossimo giro ha inizio solo dopo che tutti i cavalieri hanno pesato le spade, decretando quale è il vincitore con la spada più pesante e poi restituendo la spada al cavaliere.
+    Il gioco termina quando N cavalieri hanno vinto il gioco.
+    Il cavaliere che ha vinto il giro precedente salta un turno. 
+    Usare semafori e variabili di condizione.
+*/
+
+//Processi da sincronizzare: Armiere & Cavaliere
+
+/* Azioni dell'Armiere:
+   1) Aspetta il segnale che è iniziato il prossimo giro
+   2) Posa M spade
+   3) Aspetta che i cavalieri prendano le spade dal bancone
+   4) Manda il segnale che è iniziato il turno
+
+*/
+
+/* Azioni del Cavaliere:
+   1) Aspettano il segnale che è iniziato il turno
+   2) Cercano di prendere una spada
+   3) Se riesce a prendere una spada attende che tutti gli altri cavalieri riescano a prenderne una
+   4) Se invece non riescono a prendere la spada, aspettano il prossimo giro
+   5) Una volta prese le spade, i cavalieri pesano le spade decretando qual è quella più pesante
+      restituendola poi al cavaliere
+   6) Il gioco termina quando tutti gli N cavalieri hanno vinto il gioco
+   7) Il cavaliere che ha vinto il giro precedente salta un turno
+*/
+
+armiere() {
+   //Ciclio finché non finisce il gioco
+   while(gioco_in_corso) {
+      //Manda il segnale che tuttwe le spade sono state posate
+      signal(spade_posate)
+
+      //Aspetta che i cavalieri finiscano il proprio turno
+      wait(fine_turno)
+
+      //Il gioco finisce quando N cavalieri hanno vinto
+      wait(mutex)
+      if(calvalieri_vincenti == N) {
+         signal(mutex)
+         gioco_in_corso = 0
+      }
+   }
+}
+
+cavaliere(i) {
+   //Aspetta che l'armiere posi le spade
+   wait(spade_posate)
+
+   //Prendo una spada se disponibile
+   wait(mutex)
+   if(spade_disp > 0) {
+      spade_disp--
+      signal(mutex)
+   }
+
+   //Segnalo che ho preso una spada
+   wait(mutex)
+   spade_prese++
+   signal(mutex)
+
+   //Se tutti i cavalieri hanno preso una spada imposto a vero il valore del turno
+   wait(mutex)
+   if (spade_prese == M) {
+      //imposto a vero il turno
+      inizio_turno = 1
+
+      signal(mutex)
+      signal(pronti_a_giocare)
+   }
+
+   //Aspetto che tutti i cavalieri abbiano preso una spada prima di giocare
+   wait(pronti_a_giocare)
+
+   //Verifico che tutti gli altri giocatori ne abbiano presa una
+   while(inizio_turno == 1) {
+      //Peso le spade dato che è inziato il turno
+      my_peso = pesa_spada()
+
+      //Variabile per confrontare la spada che pesa di più
+      peso_max = peso_max() 
+
+      //Verifico se la mia spada è quella più pesante
+      if (my_peso == peso_max) {
+         //Ho vinto il turno
+         cavalieri_vincenti++
+
+         wait(mutex)
+
+         //Restituisco la spada
+         spade_disp++
+
+         signal(mutex)
+
+         exit()
+      }
+      else {
+         wait(mutex)
+
+         //Se ho perso poso la spada e basta
+         spade_disp++
+
+         signal(mutex)
+
+         exit()
+      }
+
+      //Finisco il turno
+      inizio_turno = 0
+
+      //Segnalo all'armiere che è finito il turno
+      signal(fine_turno)
+   }
+   else {
+      //Non ha preso la spada, quindi aspetta il prossimo turno
+      wait(next_turn)
+
+         //Aspetta che l'armiere posi le spade
+   wait(spade_posate)
+
+   //Prendo una spada se disponibile
+   wait(mutex)
+   if(spade_disp > 0) {
+      spade_disp--
+      signal(mutex)
+   }
+
+   //Segnalo che ho preso una spada
+   wait(mutex)
+   spade_prese++
+   signal(mutex)
+
+   //Se tutti i cavalieri hanno preso una spada imposto a vero il valore del turno
+   wait(mutex)
+   if (spade_prese == M) {
+      //imposto a vero il turno
+      inizio_turno = 1
+
+      signal(mutex)
+      signal(pronti_a_giocare)
+   }
+
+   //Aspetto che tutti i cavalieri abbiano preso una spada prima di giocare
+   wait(pronti_a_giocare)
+
+   //Verifico che tutti gli altri giocatori ne abbiano presa una
+   while(inizio_turno == 1) {
+      //Peso le spade dato che è inziato il turno
+      my_peso = pesa_spada()
+
+      //Variabile per confrontare la spada che pesa di più
+      peso_max = peso_max() 
+
+      //Verifico se la mia spada è quella più pesante
+      if (my_peso == peso_max) {
+         //Ho vinto il turno
+         cavalieri_vincenti++
+
+         wait(mutex)
+
+         //Restituisco la spada
+         spade_disp++
+
+         signal(mutex)
+
+         exit()
+      }
+      else {
+         //Se ho perso poso la spada e basta
+         spade_disp++
+
+         wait(mutex)
+
+         signal(mutex)
+
+         exit()
+      }
+
+      //Finisco il turno
+      inizio_turno = 0
+
+      //segnalo all'armiere che è finito il turno
+      signal(fine_turno)
+   }
+}

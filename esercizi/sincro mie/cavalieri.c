@@ -16,6 +16,7 @@ armiere(){
 
         // aspetta i cavalieri che finiscono il turno 
         wait(fine_turno)
+        
         // controllo se tutti hanno vinto
         wait(mutex)
         if(cavalieri_vincenti == N){
