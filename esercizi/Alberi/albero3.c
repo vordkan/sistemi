@@ -16,7 +16,8 @@ int main ()
 			glob = glob - 1;
 		}
 	}
-
 	printf ("Process %d, glob = %d, i = %d\n", getpid(), glob, i);
+
+	
 	exit (0);
 }

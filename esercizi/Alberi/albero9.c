@@ -6,26 +6,29 @@
 #include <unistd.h>
 
 int glob=4;
-int pid=0;
+int pid=0, j = 0;
 int temp,i;
 int main(){
 	for (i=0;i<=2;i++){
 		pid = fork();
+		j++;
 		glob++;
 	}
-		printf ("Process %d, glob = %d\n", getpid(), glob);
 
 	if (glob>5){
 		glob++;
 		if (pid==0){
 			pid=fork();
+			j++;
 		}
 		if (pid!=0){
 			pid = fork();
+			j++;
 			glob--;
 		}
 		if (pid==0){
 			pid = fork();
+			j++;
 			glob--;
 		}
 		if (pid!=0){
@@ -35,6 +38,7 @@ int main(){
 			glob--;
 		}
 	}
-	
+	printf ("Process %d, glob = %d\n", j, glob);
+
 }
 

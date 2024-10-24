@@ -22,7 +22,7 @@ int main(){
             pid = fork();
 		}
 		cocc=  glob+2*3;
-		printf("%d", cocc);
+		//printf("%d", cocc);
 	}
     else if (pid==0){
       	for (i=2;i<=3;i++){
