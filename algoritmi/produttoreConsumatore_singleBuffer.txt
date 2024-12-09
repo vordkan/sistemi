@@ -1,0 +1,16 @@
+produttore(){
+    while(1){
+        buffer[0] = ...
+        // produci
+        signal(pieno)
+    }
+}
+
+consumatore(){
+    while(1){
+        wait(pieno)
+        x = buffer[0]
+        // consuma
+        signal(vuoto)
+    }
+}

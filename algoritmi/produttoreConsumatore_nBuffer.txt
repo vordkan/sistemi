@@ -1,0 +1,17 @@
+produttore(){
+    while(1){
+        wait(vuoto)
+        buffer[prod_ptr] = ...
+        // produce
+        prod_ptr = prod_ptr + 1 mod n
+        signal(pieno)
+    }
+}
+
+consumatore(){
+    wait(pieno)
+    x = buffer[cons_ptr]
+    // consuma
+    cons_ptr = cons_ptr + 1 mod n
+    signal(vuoto)
+}

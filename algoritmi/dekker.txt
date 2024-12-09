@@ -1,0 +1,47 @@
+L’algoritmo di Dekker fa uso sia della variabile turn che delle variabili di stato
+
+Se P1 e P2 provano ad entrare contemporaneamente in SC, turn indica a quale dei due è
+consentito.
+Se non c’è competizione per entrare, turn non ha effetto, tuttavia se entrambi i processi
+tentano di accedere nelle rispettive SC, turn forza una dei due a favorire l’altro.
+
+In tutto ciò, turn viene preso in considerazione solo se ambo i processi stanno cercando di
+entrare in SC nello stesso tempo.
+
+Tale algoritmo implementa tutte le proprietà delle SC ed inoltre evita deadlock e livelock.
+
+p1(){
+    while(1){
+        c1 = 0
+        while(c2 == 0){
+            if(turn == 2){
+                c1 = 1
+                while(turn == 2){
+                    // ucciditi 
+                }
+                c1 = 0
+                // sc
+                turn = 2
+                c1 = 1
+            }
+        }
+    }
+}
+
+p2(){
+    while(1){
+        c2 = 0
+        while(c1 == 0){
+            if(turn == 1){
+                c2 = 1
+                while(turn == 1){
+                    // ucciditi
+                }
+                c2 = 0
+                // sc
+                turn = 1
+                c2 = 1
+            }
+        }
+    }
+}

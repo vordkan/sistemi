@@ -1,0 +1,40 @@
+L'algoritmo di Peterson è un meccanismo per ottenere la mutua esclusione in un sistema con due
+processi concorrenti  senza l'uso di primitive hardware speciali come semafori o mutex. 
+Garantisce che un solo processo alla volta acceda alla sezione critica.
+
+Un processo segnala il proprio interesse impostando flag a true.
+Imposta il turno all'altro processo (cedendo la precedenza).
+Rimane in attesa finché:
+L'altro processo vuole entrare (flag[altri] = true).
+E ha la precedenza (turn = altri).
+Una volta che queste condizioni non sono più valide, entra nella sezione critica.
+Al termine, segnala l'uscita dalla sezione critica impostando flag a false.
+
+
+p1(){
+    while(true){
+        flag[0] = true
+        turn = 1
+        while(flag[1] and turn = 1){
+            // attendi
+        }
+
+        // sezione critica
+        // codice della sezione critica
+
+        flag[0] = false
+    }
+}
+
+p2(){
+    flag[1] = true
+    turn = 0
+    while(flagg[0] and turn = 0){
+        // attendi
+    }
+
+    // sezione critica
+    // codice della sezione critica
+
+    flag[1] = false
+}
