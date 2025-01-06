@@ -1,0 +1,49 @@
+lettori(){
+    while(true){
+        wait(sc)
+        totLettori ++
+        if(runScrittori = 0){
+            runLettori ++
+            signal(lettura)
+        }
+        signal(sc)
+        wait(lettura)
+        //leggi
+        wait(sc)
+        runLettori --
+        totLettori --
+        if (runLettori = 0 and totScrittori > runScrittori){
+            runScrittori = 1
+            signal(scrittura)
+        }
+        signal(sc)
+        }
+}
+
+scrittori(){
+    whil(true){
+        wait(sc)
+        totScrittori++
+        if(runLettori == 0 and runScrittori == 0){
+            runScrittori ++
+            signal(scrittura)
+        }
+        signal(sc)
+        wait(scrittura)
+        wait(sc)
+        runScrittori --
+        totScrittori --
+        while(runLettori < totLettori){
+            runLettori ++  
+            signal(lettura)
+        }
+        if(runLettori == 0){
+            runScrittori ++
+            signal(scrittura)
+        }
+        signal(sc)
+    }
+}
+-------------------------------------------------------
+
+-------------------------------------------------------

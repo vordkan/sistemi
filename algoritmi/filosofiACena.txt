@@ -1,0 +1,25 @@
+filosofo(){
+    while(!successo){
+        wait(sc)
+        if(forchetta){
+            forchetta = 0
+            fdestra = 1
+            fsinistra = 1
+            successo = true
+        }
+        signal(sc)
+        if(!successo){
+            block(filosoo(i))
+        }
+    }
+    //mangia
+    wait(sc)
+    forchetta = 1
+    signal
+    if(vicinoS == 0){
+        vicinoS == 1
+    }
+    if(vicinoD == 0){
+        vicinoD == 1
+    }
+}
